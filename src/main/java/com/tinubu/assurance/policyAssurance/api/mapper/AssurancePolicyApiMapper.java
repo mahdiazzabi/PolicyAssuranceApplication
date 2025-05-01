@@ -1,8 +1,11 @@
 package com.tinubu.assurance.policyAssurance.api.mapper;
 
 import com.tinubu.assurance.policyAssurance.api.request.CreatePolicyRequest;
+import com.tinubu.assurance.policyAssurance.api.request.UpdatePolicyRequest;
 import com.tinubu.assurance.policyAssurance.api.response.PolicyResponse;
 import com.tinubu.assurance.policyAssurance.api.response.PolicyStatusResponse;
+import com.tinubu.assurance.policyAssurance.application.command.CreateAssurancePolicyCommand;
+import com.tinubu.assurance.policyAssurance.application.command.UpdateAssurancePolicyCommand;
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyDTO;
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyStatusDTO;
 
@@ -13,6 +16,47 @@ public class AssurancePolicyApiMapper {
 
     private AssurancePolicyApiMapper() {
         // Private constructor to prevent instantiation
+    }
+
+    public static AssurancePolicyDTO toDto(UpdateAssurancePolicyCommand command) {
+        if (command == null) {
+            return null;
+        }
+
+        return new AssurancePolicyDTO.Builder()
+                .id(command.getId())
+                .policyName(command.getName())
+                .status(command.getStatus())
+                .coverageStartDate(command.getStartDate())
+                .coverageEndDate(command.getEndDate())
+                .build();
+    }
+
+    public static CreateAssurancePolicyCommand toCommand(CreatePolicyRequest request) {
+        if (request == null) {
+            return null;
+        }
+
+        return new CreateAssurancePolicyCommand(
+                request.getPolicyName(),
+                mapStatus(request.getStatus()),
+                request.getCoverageStartDate(),
+                request.getCoverageEndDate()
+        );
+    }
+
+    public static UpdateAssurancePolicyCommand toCommand(UpdatePolicyRequest request) {
+        if (request == null) {
+            return null;
+        }
+
+        return new UpdateAssurancePolicyCommand(
+                request.getPolicyId(),
+                request.getPolicyName(),
+                mapStatus(request.getStatus()),
+                request.getCoverageStartDate(),
+                request.getCoverageEndDate()
+        );
     }
 
     public static AssurancePolicyDTO toDto(CreatePolicyRequest request) {
@@ -64,4 +108,5 @@ public class AssurancePolicyApiMapper {
                 .map(AssurancePolicyApiMapper::toResponse)
                 .collect(Collectors.toList());
     }
+
 }

@@ -4,6 +4,7 @@ import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicy
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyStatusDTO;
 import com.tinubu.assurance.policyAssurance.infra.mapper.AssurancePolicyInfraMapper;
 import com.tinubu.assurance.policyAssurance.infra.repository.AssurancePolicyRepository;
+import com.tinubu.assurance.policyAssurance.infra.service.AssurancePolicyServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,11 +41,13 @@ public class AssurancePolicyServiceImplTest {
             AssurancePolicyDTO inputDto = new AssurancePolicyDTO.Builder()
                     .policyName("Policy1")
                     .status(AssurancePolicyStatusDTO.valueOf("ACTIVE"))
+                    .coverageStartDate(new Date()).coverageEndDate(new Date())
                     .build();
             AssurancePolicyDTO savedDto = new AssurancePolicyDTO.Builder()
                     .id(1)
                     .policyName("Policy1")
                     .status(AssurancePolicyStatusDTO.valueOf("ACTIVE"))
+                    .coverageStartDate(new Date()).coverageEndDate(new Date())
                     .build();
             when(assurancePolicyRepository.save(any())).thenReturn(AssurancePolicyInfraMapper.toEntity(savedDto));
 
@@ -73,6 +77,7 @@ public class AssurancePolicyServiceImplTest {
                     .id(policyId)
                     .policyName("Policy1")
                     .status(AssurancePolicyStatusDTO.valueOf("ACTIVE"))
+                    .coverageStartDate(new Date()).coverageEndDate(new Date())
                     .build();
             when(assurancePolicyRepository.findById(policyId)).thenReturn(Optional.of(AssurancePolicyInfraMapper.toEntity(dto)));
 
@@ -103,8 +108,8 @@ public class AssurancePolicyServiceImplTest {
         @DisplayName("returns list of policies when policies exist")
         void returnsListOfPoliciesWhenPoliciesExist() {
             List<AssurancePolicyDTO> dtos = List.of(
-                    new AssurancePolicyDTO.Builder().id(1).policyName("Policy1").status(AssurancePolicyStatusDTO.valueOf("ACTIVE")).build(),
-                    new AssurancePolicyDTO.Builder().id(2).policyName("Policy2").status(AssurancePolicyStatusDTO.valueOf("INACTIVE")).build()
+                    new AssurancePolicyDTO.Builder().id(1).policyName("Policy1").status(AssurancePolicyStatusDTO.valueOf("ACTIVE")).coverageStartDate(new Date()).coverageEndDate(new Date()).build(),
+                    new AssurancePolicyDTO.Builder().id(2).policyName("Policy2").status(AssurancePolicyStatusDTO.valueOf("INACTIVE")).coverageStartDate(new Date()).coverageEndDate(new Date()).build()
             );
             when(assurancePolicyRepository.findAll()).thenReturn(dtos.stream().map(AssurancePolicyInfraMapper::toEntity).toList());
 

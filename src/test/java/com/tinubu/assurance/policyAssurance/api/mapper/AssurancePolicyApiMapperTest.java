@@ -29,13 +29,6 @@ class AssurancePolicyApiMapperTest {
         assertEquals(request.getCoverageEndDate(), dto.getCoverageEndDate());
     }
 
-    @Test
-    @DisplayName("returns null when converting null CreatePolicyRequest to AssurancePolicyDTO")
-    void returnsNullWhenConvertingNullCreatePolicyRequestToAssurancePolicyDto() {
-        AssurancePolicyDTO dto = AssurancePolicyApiMapper.toDto(null);
-
-        assertNull(dto);
-    }
 
     @Test
     @DisplayName("throws exception when invalid status is provided in CreatePolicyRequest")

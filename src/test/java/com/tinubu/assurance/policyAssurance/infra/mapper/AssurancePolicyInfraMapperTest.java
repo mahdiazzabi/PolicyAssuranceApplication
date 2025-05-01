@@ -24,8 +24,8 @@ class AssurancePolicyInfraMapperTest {
         entity.setId(1);
         entity.setPolicyName("Policy1");
         entity.setStatus(PolicyStatus.ACTIVE);
-        entity.setCoverageStartDate(new Date(2023, 1, 1));
-        entity.setCoverageEndDate(new Date(2023, 12, 31));
+        entity.setCoverageStartDate(new java.sql.Date(2023, 1, 1));
+        entity.setCoverageEndDate(new java.sql.Date(2023, 12, 31));
 
         AssurancePolicyDTO dto = AssurancePolicyInfraMapper.toDTO(entity);
 

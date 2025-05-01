@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "assurance_policy")
@@ -30,11 +29,11 @@ public class AssurancePolicyEntity {
 
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreationTimestamp
-    private LocalDateTime createdDate;
+    private java.sql.Date createdDate;
 
     @Column(name = "updated_date", nullable = false)
     @UpdateTimestamp
-    private LocalDateTime updatedDate;
+    private java.sql.Date updatedDate;
 
     // Getters and Setters
 
@@ -78,19 +77,19 @@ public class AssurancePolicyEntity {
         this.coverageEndDate = coverageEndDate;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
-    public LocalDateTime getUpdatedDate() {
+    public Date getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(LocalDateTime updatedDate) {
+    public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
     }
 }
