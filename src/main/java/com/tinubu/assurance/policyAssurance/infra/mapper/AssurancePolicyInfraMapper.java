@@ -3,6 +3,7 @@ package com.tinubu.assurance.policyAssurance.infra.mapper;
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyDTO;
 import com.tinubu.assurance.policyAssurance.infra.model.AssurancePolicyEntity;
 
+import java.sql.Date;
 import java.util.List;
 
 public class AssurancePolicyInfraMapper {
@@ -31,8 +32,8 @@ public class AssurancePolicyInfraMapper {
         entity.setId(dto.getId());
         entity.setPolicyName(dto.getPolicyName());
         entity.setStatus(PolicyStatusMapper.toEntity(dto.getStatus()));
-        entity.setCoverageStartDate(dto.getCoverageStartDate());
-        entity.setCoverageEndDate(dto.getCoverageEndDate());
+        entity.setCoverageStartDate(new Date(dto.getCoverageStartDate().getTime()));
+        entity.setCoverageEndDate(new Date(dto.getCoverageEndDate().getTime()) );
         return entity;
     }
 }

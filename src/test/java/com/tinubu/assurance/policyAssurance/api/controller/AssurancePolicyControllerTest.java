@@ -2,7 +2,14 @@ package com.tinubu.assurance.policyAssurance.api.controller;
 
 import com.tinubu.assurance.policyAssurance.api.mapper.AssurancePolicyApiMapper;
 import com.tinubu.assurance.policyAssurance.api.request.CreatePolicyRequest;
+import com.tinubu.assurance.policyAssurance.api.request.UpdatePolicyRequest;
 import com.tinubu.assurance.policyAssurance.api.response.PolicyResponse;
+import com.tinubu.assurance.policyAssurance.application.command.CreateAssurancePolicyCommand;
+import com.tinubu.assurance.policyAssurance.application.command.UpdateAssurancePolicyCommand;
+import com.tinubu.assurance.policyAssurance.application.command.handler.AssurancePolicyCommandHandler;
+import com.tinubu.assurance.policyAssurance.application.query.GetAllAssurancePoliciesQuery;
+import com.tinubu.assurance.policyAssurance.application.query.GetAssurancePolicyByIdQuery;
+import com.tinubu.assurance.policyAssurance.application.query.handler.AssurancePolicyQueryHandler;
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyDTO;
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyStatusDTO;
 import com.tinubu.assurance.policyAssurance.domain.assurance.service.AssurancePolicyService;
@@ -29,7 +36,11 @@ import static org.mockito.Mockito.*;
 class AssurancePolicyControllerTest {
 
     @Mock
-    private AssurancePolicyService assurancePolicyService;
+    private AssurancePolicyCommandHandler assurancePolicyCommandHandler;
+
+
+    @Mock
+    private AssurancePolicyQueryHandler assurancePolicyQueryHandler;
 
     @Mock
     AssurancePolicyApiMapper mapper;
@@ -48,8 +59,8 @@ class AssurancePolicyControllerTest {
             CreatePolicyRequest request = new CreatePolicyRequest();
             request.setStatus("ACTIVE");
             AssurancePolicyDTO dto = new AssurancePolicyDTO.Builder().id(1).policyName("Policy1").build();
-            when(assurancePolicyService.createAssurancePolicy(any()))
-                    .thenReturn(dto);
+            when(assurancePolicyCommandHandler.handle(any(CreateAssurancePolicyCommand.class)))
+                    .thenReturn(dto.getId());
 
             ResponseEntity<String> response = assurancePolicyController.createPolicy(request);
             assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -80,7 +91,7 @@ class AssurancePolicyControllerTest {
         void returnsListOfPoliciesWhenPoliciesExist() {
             List<AssurancePolicyDTO> dtos = List.of(new AssurancePolicyDTO.Builder().id(1).policyName("Policy1").build());
             List<PolicyResponse> responses = List.of(new PolicyResponse("Policy1", null, null, null));
-            when(assurancePolicyService.getAllAssurancePolicies()).thenReturn(dtos);
+            when(assurancePolicyQueryHandler.handle(any(GetAllAssurancePoliciesQuery.class))).thenReturn(dtos);
 
             ResponseEntity<List<PolicyResponse>> response = assurancePolicyController.getAllPolicies();
 
@@ -91,7 +102,7 @@ class AssurancePolicyControllerTest {
         @Test
         @DisplayName("returns empty list when no policies exist")
         void returnsEmptyListWhenNoPoliciesExist() {
-            when(assurancePolicyService.getAllAssurancePolicies()).thenReturn(List.of());
+            when(assurancePolicyQueryHandler.handle(any(GetAllAssurancePoliciesQuery.class))).thenReturn(List.of());
 
             ResponseEntity<List<PolicyResponse>> response = assurancePolicyController.getAllPolicies();
 
@@ -110,7 +121,7 @@ class AssurancePolicyControllerTest {
             Integer policyId = 1;
             AssurancePolicyDTO dto = new AssurancePolicyDTO.Builder().id(policyId).policyName("Policy1").build();
             PolicyResponse responseDto = new PolicyResponse("Policy1", null, null, null);
-            when(assurancePolicyService.getAssurancePolicy(policyId)).thenReturn(Optional.of(dto));
+            when(assurancePolicyQueryHandler.handle(any(GetAssurancePolicyByIdQuery.class))).thenReturn(dto);
 
             ResponseEntity<PolicyResponse> response = assurancePolicyController.getPolicy(policyId);
 
@@ -122,11 +133,30 @@ class AssurancePolicyControllerTest {
         @DisplayName("returns NOT FOUND status when policy with given ID does not exist")
         void returnsNotFoundStatusWhenPolicyWithGivenIdDoesNotExist() {
             int policyId = 1;
-            when(assurancePolicyService.getAssurancePolicy(policyId)).thenReturn(Optional.empty());
+            when(assurancePolicyQueryHandler.handle(any(GetAssurancePolicyByIdQuery.class))).thenThrow(new RuntimeException("Assurance policy not found"));
 
             ResponseEntity<PolicyResponse> response = assurancePolicyController.getPolicy(policyId);
 
             assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        }
+    }
+
+    @Nested
+    @DisplayName("updatePolicy")
+    class UpdatePolicy {
+
+        @Test
+        @DisplayName("updates policy successfully")
+        void updatesPolicySuccessfully() {
+            UpdatePolicyRequest request = new UpdatePolicyRequest();
+            request.setPolicyName("UpdatedPolicy");
+            request.setStatus("ACTIVE");
+            when(assurancePolicyCommandHandler.handle(any(UpdateAssurancePolicyCommand.class))).thenReturn(1);
+
+            ResponseEntity<String> response = assurancePolicyController.updatePolicy(request);
+
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+            assertEquals("Assurance Policy updated with id : 1", response.getBody());
         }
     }
 }

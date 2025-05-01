@@ -17,6 +17,8 @@ public interface AssurancePolicyService {
      */
     AssurancePolicyDTO createAssurancePolicy(AssurancePolicyDTO policyDto);
 
+    AssurancePolicyDTO updateAssurancePolicy(AssurancePolicyDTO policyDto);
+
     Optional<AssurancePolicyDTO> getAssurancePolicy(Integer id);
 
     List<AssurancePolicyDTO> getAllAssurancePolicies();

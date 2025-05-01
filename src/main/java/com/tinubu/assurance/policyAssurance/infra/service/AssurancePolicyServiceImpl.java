@@ -1,11 +1,16 @@
-package com.tinubu.assurance.policyAssurance.domain.assurance;
+package com.tinubu.assurance.policyAssurance.infra.service;
 
+import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyStatusDTO;
 import com.tinubu.assurance.policyAssurance.domain.assurance.service.AssurancePolicyService;
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyDTO;
 import com.tinubu.assurance.policyAssurance.infra.mapper.AssurancePolicyInfraMapper;
+import com.tinubu.assurance.policyAssurance.infra.model.AssurancePolicyEntity;
+import com.tinubu.assurance.policyAssurance.infra.model.PolicyStatus;
 import com.tinubu.assurance.policyAssurance.infra.repository.AssurancePolicyRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +33,31 @@ public class AssurancePolicyServiceImpl implements AssurancePolicyService {
     @Override
     public AssurancePolicyDTO createAssurancePolicy(AssurancePolicyDTO policyDto) {
         return AssurancePolicyInfraMapper.toDTO(assurancePolicyRepository.save(AssurancePolicyInfraMapper.toEntity(policyDto)));
+    }
+
+    /**
+     * Update an existing assurance policy.
+     *
+     * @param policyDto the assurance policy to update
+     * @return the updated assurance policy
+     */
+    @Override
+    @Transactional
+    public AssurancePolicyDTO updateAssurancePolicy(AssurancePolicyDTO policyDto) {
+        if (policyDto.getId() == null) {
+            throw new IllegalArgumentException("Policy ID is required for update.");
+        }
+
+        AssurancePolicyEntity existingEntity = assurancePolicyRepository.findById(policyDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Policy not found with ID: " + policyDto.getId()));
+
+        existingEntity.setPolicyName(policyDto.getPolicyName());
+        existingEntity.setStatus(PolicyStatus.valueOf(policyDto.getStatus().name()));
+        existingEntity.setCoverageStartDate(new Date(policyDto.getCoverageStartDate().getTime()));
+        existingEntity.setCoverageEndDate(new Date(policyDto.getCoverageEndDate().getTime()));
+        existingEntity.setUpdatedDate(new Date(System.currentTimeMillis()));
+
+        return AssurancePolicyInfraMapper.toDTO(assurancePolicyRepository.save(existingEntity));
     }
 
     /**
