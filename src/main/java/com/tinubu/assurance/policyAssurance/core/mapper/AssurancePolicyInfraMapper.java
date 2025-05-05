@@ -1,7 +1,7 @@
-package com.tinubu.assurance.policyAssurance.infra.mapper;
+package com.tinubu.assurance.policyAssurance.core.mapper;
 
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyDTO;
-import com.tinubu.assurance.policyAssurance.infra.model.AssurancePolicyEntity;
+import com.tinubu.assurance.policyAssurance.persistance.model.AssurancePolicyEntity;
 
 import java.sql.Date;
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.tinubu.assurance.policyAssurance.infra.mapper;
+package com.tinubu.assurance.policyAssurance.core.mapper;
 
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyStatusDTO;
-import com.tinubu.assurance.policyAssurance.infra.model.PolicyStatus;
+import com.tinubu.assurance.policyAssurance.persistance.model.PolicyStatus;
 
 public class PolicyStatusMapper {
 

@@ -8,7 +8,6 @@ import com.tinubu.assurance.policyAssurance.application.command.handler.Assuranc
 import com.tinubu.assurance.policyAssurance.application.query.GetAllAssurancePoliciesQuery;
 import com.tinubu.assurance.policyAssurance.application.query.GetAssurancePolicyByIdQuery;
 import com.tinubu.assurance.policyAssurance.application.query.handler.AssurancePolicyQueryHandler;
-import com.tinubu.assurance.policyAssurance.domain.assurance.service.AssurancePolicyService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

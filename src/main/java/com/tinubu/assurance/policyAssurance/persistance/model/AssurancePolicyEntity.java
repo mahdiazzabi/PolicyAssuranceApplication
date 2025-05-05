@@ -1,4 +1,4 @@
-package com.tinubu.assurance.policyAssurance.infra.model;
+package com.tinubu.assurance.policyAssurance.persistance.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
