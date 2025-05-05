@@ -1,12 +1,11 @@
-package com.tinubu.assurance.policyAssurance.infra.service;
+package com.tinubu.assurance.policyAssurance.core.service;
 
-import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyStatusDTO;
 import com.tinubu.assurance.policyAssurance.domain.assurance.service.AssurancePolicyService;
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyDTO;
-import com.tinubu.assurance.policyAssurance.infra.mapper.AssurancePolicyInfraMapper;
-import com.tinubu.assurance.policyAssurance.infra.model.AssurancePolicyEntity;
-import com.tinubu.assurance.policyAssurance.infra.model.PolicyStatus;
-import com.tinubu.assurance.policyAssurance.infra.repository.AssurancePolicyRepository;
+import com.tinubu.assurance.policyAssurance.core.mapper.AssurancePolicyInfraMapper;
+import com.tinubu.assurance.policyAssurance.persistance.model.AssurancePolicyEntity;
+import com.tinubu.assurance.policyAssurance.persistance.model.PolicyStatus;
+import com.tinubu.assurance.policyAssurance.persistance.repository.AssurancePolicyRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

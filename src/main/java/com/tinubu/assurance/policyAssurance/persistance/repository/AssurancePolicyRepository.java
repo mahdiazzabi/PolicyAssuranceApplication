@@ -1,6 +1,6 @@
-package com.tinubu.assurance.policyAssurance.infra.repository;
+package com.tinubu.assurance.policyAssurance.persistance.repository;
 
-import com.tinubu.assurance.policyAssurance.infra.model.AssurancePolicyEntity;
+import com.tinubu.assurance.policyAssurance.persistance.model.AssurancePolicyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

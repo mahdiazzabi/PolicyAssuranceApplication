@@ -9,12 +9,6 @@ import java.util.Optional;
 @Service
 public interface AssurancePolicyService {
 
-    /**
-     * Create a new assurance policy.
-     *
-     * @param policyDto the assurance policy to create
-     * @return the created assurance policy
-     */
     AssurancePolicyDTO createAssurancePolicy(AssurancePolicyDTO policyDto);
 
     AssurancePolicyDTO updateAssurancePolicy(AssurancePolicyDTO policyDto);

@@ -1,9 +1,9 @@
-package com.tinubu.assurance.policyAssurance.infra.mapper;
+package com.tinubu.assurance.policyAssurance.core.mapper;
 
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyDTO;
 import com.tinubu.assurance.policyAssurance.domain.assurance.dto.AssurancePolicyStatusDTO;
-import com.tinubu.assurance.policyAssurance.infra.model.AssurancePolicyEntity;
-import com.tinubu.assurance.policyAssurance.infra.model.PolicyStatus;
+import com.tinubu.assurance.policyAssurance.persistance.model.AssurancePolicyEntity;
+import com.tinubu.assurance.policyAssurance.persistance.model.PolicyStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
